@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --harmony-async-await ./src/index",
+    "dev": "nodemon --harmony-async-await ./src/index"
+  },
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "graphql": "^0.7.2",
+    "graphql-server-hapi": "^0.4.3",
+    "graphql-subscriptions": "^0.2.1",
+    "graphql-tools": "^0.8.1",
+    "hapi": "^15.2.0",
+    "hapi-auth-jwt2": "^7.2.0",
+    "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.17.2",
+    "mongoose": "^4.6.8",
+    "reify": "^0.3.8",
+    "subscriptions-transport-ws": "^0.3.1"
+  }
+}

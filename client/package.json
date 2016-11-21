@@ -6,8 +6,24 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "aphrodite": "^1.1.0",
+    "apollo-client": "^0.5.6",
+    "graphql-tag": "^0.1.17",
+    "lodash": "^4.17.2",
+    "react": "^15.4.0",
+    "react-apollo": "^0.6.0",
+    "react-dom": "^15.4.0",
+    "react-helmet": "^3.2.2",
+    "react-redux": "^4.4.6",
+    "react-router": "^3.0.0",
+    "react-router-scroll": "^0.4.1",
+    "rebass": "^0.3.3",
+    "redux": "^3.6.0",
+    "redux-persist": "^4.0.0-beta1",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.1.0",
+    "subscriptions-transport-ws": "^0.3.1",
+    "use-named-routes": "^0.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
