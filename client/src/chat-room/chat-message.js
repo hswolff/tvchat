@@ -8,6 +8,13 @@ import {
 } from '../data/modules/users';
 
 const styles = StyleSheet.create({
+  time: {
+    color: '#AAA',
+  },
+  user: {
+    fontWeight: 700,
+    margin: '0 .5rem',
+  },
 });
 
 function formatAMPM(date) {
@@ -24,16 +31,14 @@ function ChatMessage({ id, message, timestamp, username }) {
   const timeObj = new Date(timestamp);
 
   return (
-    <div
-      className={css(styles.message) + ' my1 align-middle'}
-    >
+    <div className={css(styles.message)}>
       <span
-        className="gray"
+        className={css(styles.time)}
         title={timeObj.toISOString()}
       >
         [{formatAMPM(timeObj)}]
       </span>
-      <span className="mx1 bold">{username}</span>
+      <span className={css(styles.user)}>{username}</span>
       <span className="">{message}</span>
     </div>
   );

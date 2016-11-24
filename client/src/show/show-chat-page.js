@@ -3,6 +3,9 @@ import React, {
 } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {
+  Header,
+} from 'semantic-ui-react';
 import ChatRoom from '../chat-room/chat-room';
 import Error404 from '../error/error-404';
 
@@ -19,8 +22,8 @@ class ShowChatPage extends Component {
     const show = data.shows[0];
 
     return (
-      <div className="container">
-        <h1 style={{ textAlign: 'center' }}>{show.name}</h1>
+      <div>
+        <Header size="huge" as="h1" textAlign="center">{show.name}</Header>
         <ChatRoom showId={show.id} />
       </div>
     );

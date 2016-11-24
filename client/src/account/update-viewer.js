@@ -26,7 +26,7 @@ class UpdateViewer extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="grid -between">
+      <form onSubmit={this.onSubmit}>
         <input type="text" placeholder="Update Username" ref="username" />
         <input type="text" placeholder="Update Email" ref="email" />
         <input type="password" placeholder="Update Password" ref="password" />

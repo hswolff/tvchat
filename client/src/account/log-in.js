@@ -6,6 +6,10 @@ import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import {
+  Form,
+  Button,
+} from 'semantic-ui-react';
+import {
   isLoggedIn,
   persistViewer,
   logOut,
@@ -16,11 +20,13 @@ import {
 const EMAIL_REGEX = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
 
 class LogIn extends Component {
-  onSubmit = async (e) => {
+  onSubmit = async (e, serializedForm) => {
     e.nativeEvent.preventDefault();
 
-    const username = this.refs.username.value;
-    const password = this.refs.password.value;
+    const {
+      username,
+      password,
+    } = serializedForm;
     if (!username || !password) {
       return;
     }
@@ -55,43 +61,25 @@ class LogIn extends Component {
     });
   }
 
-  resetForm = () => {
-    this.refs.email.value = '';
-    this.refs.password.value = '';
-  }
-
-  renderSignIn() {
-    return (
-      <div className="">
-        <form onSubmit={this.onSubmit}>
-          <input type="text" placeholder="username" ref="username" />
-          <input type="password" placeholder="password" ref="password" />
-          <button type="submit">Log In or Create User</button><br />
-        </form>
-      </div>
-    );
-  }
-
   render() {
-    return (
-      <div className="container">
-        <div className="grid -between -middle">
-          <div>
-            {this.props.isLoggedIn ?
-              <div>
-                {_.get(this.props, 'viewer.viewer.username')}
-                &nbsp;&nbsp;&nbsp;
-                <button onClick={this.props.logOut} className="btn btn-info">
-                  Log Out
-                </button>
-              </div> :
-              <div>
-                {this.renderSignIn()}
-              </div>
-            }
-          </div>
+    if (this.props.isLoggedIn) {
+      return (
+        <div>
+          {_.get(this.props, 'viewer.viewer.username')}
+          &nbsp;&nbsp;&nbsp;
+          <Button onClick={this.props.logOut} icon="sign out" />
         </div>
-      </div>
+      );
+    }
+
+    return (
+      <Form onSubmit={this.onSubmit} size="small">
+        <Form.Group inline>
+          <Form.Input type="text" name="username" placeholder="username" />
+          <Form.Input type="password" name="password" placeholder="password" />
+          <Form.Button type="submit" size="small" icon="sign in"></Form.Button>
+        </Form.Group>
+      </Form>
     );
   }
 }

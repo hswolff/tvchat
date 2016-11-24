@@ -9,7 +9,11 @@ import { graphql, withApollo, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import {
   Container,
-} from 'rebass';
+  Dimmer,
+  Grid,
+  Loader,
+  Segment,
+} from 'semantic-ui-react';
 import {
   getUsers,
   upsertUser,
@@ -182,37 +186,35 @@ class ChatRoom extends Component {
   }, 50);
 
   render() {
-    if (this.props.chatMessages.loading) {
-      return (
-        <div className="loading">Loading</div>
-      );
-    }
-
     const chatMessages = _.get(this.props.chatMessages, 'chatMessages', [])
       .concat(this.state.messages);
 
     return (
       <Container>
-        <div className="clearfix">
-          <div className="col col-10">
-            <div
-              className={css(styles.overflow) + ' p1 border'}
-              ref="messages"
-            >
-              {chatMessages.map(chatMessage =>
-                <ChatMessage key={chatMessage.id} {...chatMessage} />
-              )}
-            </div>
+        <Grid>
+          <Grid.Column width={13}>
+            <Dimmer.Dimmable as={Segment} blurring dimmed={this.props.chatMessages.loading}>
+              <Dimmer active={this.props.chatMessages.loading} inverted />
+              <Loader size="large" active={this.props.chatMessages.loading}>Loading</Loader>
 
-            {this.props.isLoggedIn ?
-              <ChatInput showId={this.props.showId} /> :
-              <div>Log In!</div>
-            }
-          </div>
-          <div className="col col-2 pl2">
-            <ChatUserList showId={this.props.showId} />
-          </div>
-        </div>
+              <div className={css(styles.overflow)} ref="messages">
+                {chatMessages.map(chatMessage =>
+                  <ChatMessage key={chatMessage.id} {...chatMessage} />
+                )}
+              </div>
+
+              {this.props.isLoggedIn ?
+                <ChatInput showId={this.props.showId} /> :
+                <div>Log In!</div>
+              }
+            </Dimmer.Dimmable>
+          </Grid.Column>
+          <Grid.Column width={3}>
+            <Segment>
+              <ChatUserList showId={this.props.showId} />
+            </Segment>
+          </Grid.Column>
+        </Grid>
       </Container>
     );
   }

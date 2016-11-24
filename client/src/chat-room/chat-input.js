@@ -4,6 +4,9 @@ import React, {
 } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {
+  Form,
+} from 'semantic-ui-react';
 
 class ChatInput extends Component {
   static propTypes = {
@@ -29,25 +32,25 @@ class ChatInput extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} className="clearfix mt1">
-        <input
-          type="text"
-          placeholder="Your Message"
-          value={this.state.value}
-          onChange={e => this.setState({ value: e.target.value })}
-          className="form-control col col-9"
-        />
-        <div className="pl2 col col-3 center">
-          <button
+      <Form onSubmit={this.onSubmit}>
+        <Form.Group width={16}>
+          <Form.Input
+            width={16}
+            name="inputText"
+            type="text"
+            placeholder="Your Message"
+            value={this.state.value}
+            onChange={e => this.setState({ value: e.target.value })}
+          />
+          <Form.Button
+            floated="right"
             type="submit"
-            className=""
-            style={{ width: '100%' }}
             disabled={this.state.value === ''}
           >
             Send
-          </button>
-        </div>
-      </form>
+          </Form.Button>
+        </Form.Group>
+      </Form>
     );
   }
 }

@@ -99,7 +99,7 @@ class ChatUserList extends Component {
 
   render() {
     return (
-      <div className="border p1">
+      <div>
         {_.map(this.state.chatUsers, chatUser => {
           const user = this.props.users[chatUser.userId] || chatUser.user;
           return <ChatUserCell key={user.id} {...chatUser} {...user} />;

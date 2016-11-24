@@ -5,28 +5,26 @@ import { Link } from 'react-router';
 import { graphql } from 'react-apollo';
 import _ from 'lodash';
 import gql from 'graphql-tag';
+import {
+  Grid,
+} from 'semantic-ui-react'
 
 const ShowRow = (show) => (
-  <Link
-    key={show.id}
-    to={`/${show.slug}`}
-  >
-    <div className="clearfix border">
-      <div className="col col-6">id: {show.id}</div>
-      <div className="col col-3">Name: {show.name}</div>
-      <div className="col col-3">Slug: {show.slug}</div>
-    </div>
-  </Link>
+  <Grid.Row key={show.slug} as={Link} to={`/${show.slug}`}>
+    <Grid.Column width={8}>id: {show.id}</Grid.Column>
+    <Grid.Column width={4}>Name: {show.name}</Grid.Column>
+    <Grid.Column width={4}>Slug: {show.slug}</Grid.Column>
+  </Grid.Row>
 );
 
 class ShowsList extends Component {
   render() {
     return (
-      <div className="">
+      <div>
         <h1>Shows</h1>
-        <div>
+        <Grid>
           {_.get(this.props, 'data.shows', []).map(ShowRow)}
-        </div>
+        </Grid>
       </div>
     );
   }

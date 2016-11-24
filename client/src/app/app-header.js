@@ -8,34 +8,31 @@ import {
 
 import {
   Container,
-  Toolbar,
-  NavItem,
-  Space,
-} from 'rebass';
+  Menu,
+} from 'semantic-ui-react'
 
 import LogIn from '../account/log-in';
 
 function AppHeader({ isLoggedIn }) {
   return (
     <Container>
-      <Toolbar>
-        <NavItem is={Link} to="/">
+      <Menu>
+        <Menu.Item as={Link} to="/" activeClassName="active" onlyActiveOnIndex>
           Harry TV
-        </NavItem>
-        <Space
-          auto={true}
-          x={1}
-        />
-        {isLoggedIn ?
-          <NavItem is={Link} to="account">
-            Account
-          </NavItem> :
-          null
-        }
-        <NavItem is="div">
-          <LogIn />
-        </NavItem>
-      </Toolbar>
+        </Menu.Item>
+
+        <Menu.Menu position="right">
+          {isLoggedIn ?
+            <Menu.Item as={Link} to="account" activeClassName="active">
+              Account
+            </Menu.Item> :
+            null
+          }
+          <Menu.Item>
+            <LogIn />
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
     </Container>
   );
 }
