@@ -56,7 +56,9 @@ class ChatRoom extends Component {
             showId
             message
             timestamp
-            ${Fragments.User}
+            user {
+              ${Fragments.User}
+            }
           }
         }
       `,
@@ -80,7 +82,7 @@ class ChatRoom extends Component {
       query: `
         subscription updatedUser {
           updatedUser {
-            ${Fragments.UserProperties}
+            ${Fragments.User}
           }
         }
       `,
@@ -235,7 +237,9 @@ export default compose(
         showId
         message
         timestamp
-        ${Fragments.User}
+        user {
+          ${Fragments.User}
+        }
       }
     }
   `, {

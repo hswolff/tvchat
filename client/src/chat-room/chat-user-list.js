@@ -42,7 +42,9 @@ class ChatUserList extends Component {
               userId
               showId
               timestamp
-              ${Fragments.User}
+              user {
+                ${Fragments.User}
+              }
             }
           }
         }
@@ -122,7 +124,9 @@ export default compose(
         id
         userId
         showId
-        ${Fragments.User}
+        user {
+          ${Fragments.User}
+        }
       }
     }
   `, {
