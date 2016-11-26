@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { graphqlHapi, graphiqlHapi } from 'graphql-server-hapi';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { createServer } from 'http';
-import { subscriptionManager, pubsub } from './subscriptions';
+import { createSubscriptionManager } from './subscriptions';
 import Models from '../models';
 import { verifyToken } from '../auth';
 import schema from './schema';
@@ -10,6 +10,8 @@ import schema from './schema';
 const WS_PORT = process.env.WS_PORT || 8080;
 
 export default async function graphql(server) {
+  const { subscriptionManager, pubsub } = createSubscriptionManager({ schema });
+
   await server.register({
     register: graphqlHapi,
     options: {
@@ -22,6 +24,7 @@ export default async function graphql(server) {
           schema,
           context: {
             Models,
+            pubsub,
           },
         };
 
