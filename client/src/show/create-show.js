@@ -10,8 +10,7 @@ class CreateShow extends Component {
     e.nativeEvent.preventDefault();
 
     const variables = {
-      // id: this.refs.id.value,
-      name: this.refs.name.value,
+      title: this.refs.title.value,
       slug: this.refs.slug.value,
     };
 
@@ -24,7 +23,7 @@ class CreateShow extends Component {
         <h1>Create a Show</h1>
         <form onSubmit={this.onSubmit}>
           <fieldset>
-            <input type="text" placeholder="Show Name" ref="name" />
+            <input type="text" placeholder="Show Title" ref="title" />
             <input type="text" placeholder="Slug" ref="slug" />
             <input type="text" placeholder="ID" ref="id" />
           </fieldset>
@@ -36,10 +35,10 @@ class CreateShow extends Component {
 }
 
 export default graphql(gql`
-  mutation ($name: String!, $slug: String!) {
-    createShow(name: $name, slug: $slug) {
+  mutation ($title: String!, $slug: String!) {
+    createShow(title: $title, slug: $slug) {
       id
-      name
+      title
       slug
       dateCreated
     }

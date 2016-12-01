@@ -23,7 +23,7 @@ class ShowChatPage extends Component {
 
     return (
       <div>
-        <Header size="huge" as="h1" textAlign="center">{show.name}</Header>
+        <Header size="huge" as="h1" textAlign="center">{show.title}</Header>
         <ChatRoom showId={show.id} />
       </div>
     );
@@ -34,7 +34,7 @@ export default graphql(gql`
   query getShow($slug: String!) {
     shows(slug: $slug) {
       id
-      name
+      title
       slug
       dateCreated
     }

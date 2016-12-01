@@ -7,15 +7,9 @@ import _ from 'lodash';
 import gql from 'graphql-tag';
 import {
   Grid,
+  Header,
+  Image,
 } from 'semantic-ui-react'
-
-const ShowRow = (show) => (
-  <Grid.Row key={show.slug} as={Link} to={`/${show.slug}`}>
-    <Grid.Column width={8}>id: {show.id}</Grid.Column>
-    <Grid.Column width={4}>Name: {show.name}</Grid.Column>
-    <Grid.Column width={4}>Slug: {show.slug}</Grid.Column>
-  </Grid.Row>
-);
 
 class ShowsList extends Component {
   render() {
@@ -23,7 +17,12 @@ class ShowsList extends Component {
       <div>
         <h1>Shows</h1>
         <Grid>
-          {_.get(this.props, 'data.shows', []).map(ShowRow)}
+          {_.get(this.props, 'data.shows', []).map(show => (
+            <Grid.Column key={show.slug} as={Link} to={`/${show.slug}`} width={4}>
+              <Image src={show.images.poster} size="medium" />
+              <Header attached="bottom">{show.title}</Header>
+            </Grid.Column>
+          ))}
         </Grid>
       </div>
     );
@@ -34,8 +33,11 @@ export default graphql(gql`
   query Shows {
     shows {
       id
-      name
+      title
       slug
+      images {
+        poster
+      }
       dateCreated
     }
   }
