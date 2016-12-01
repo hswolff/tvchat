@@ -83,31 +83,37 @@ export default async function graphql(server) {
       return origValue;
     }
 
-    const chatUser = new Models.ChatUser({ userId, showId });
+    const ChatUser = Models.ChatUserRoot.createNamespacedModel(showId);
+
+    const chatUser = new ChatUser({ userId, showId });
     chatUser._id = undefined;
-    const newChatUser =  await Models.ChatUser
+    const newChatUser =  await ChatUser
       .findOneAndUpdate({ userId }, chatUser, { upsert: true, new: true })
     pubsub.publish('updatedChatUser', {
       added: true,
       chatUser: newChatUser
     });
 
-    unsubIdToUserId[origValue] = userId;
+    unsubIdToUserId[origValue] = {
+      userId,
+      showId,
+    };
 
     return origValue;
   }
 
   const origUnsubscribe = subscriptionManager.unsubscribe;
   subscriptionManager.unsubscribe = async function (subId) {
-    const userId = unsubIdToUserId[subId];
+    const { userId, showId } = unsubIdToUserId[subId];
+    const ChatUser = Models.ChatUserRoot.createNamespacedModel(showId);
     if (userId != null) {
-      const chatUser = await Models.ChatUser.findOne({ userId });
+      const chatUser = await ChatUser.findOne({ userId });
       pubsub.publish('updatedChatUser', {
         added: false,
         chatUser,
       });
       delete unsubIdToUserId[subId];
-      await Models.ChatUser.remove({ userId });
+      await ChatUser.remove({ userId });
     }
 
     return origUnsubscribe.apply(this, arguments);

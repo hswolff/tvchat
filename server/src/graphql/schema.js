@@ -66,8 +66,10 @@ export const rootResolver = {
     },
     async chatUsers(root, { showId }, { Models }) {
       const {
-        ChatUser,
+        ChatUserRoot,
       } = Models;
+
+      const ChatUser = ChatUserRoot.createNamespacedModel(showId);
 
       return await ChatUser
         .find()
