@@ -21,6 +21,10 @@ function AppHeader({ isLoggedIn }) {
           Harry TV
         </Menu.Item>
 
+        <Menu.Item as={Link} to="showsList" activeClassName="active" onlyActiveOnIndex>
+          Shows
+        </Menu.Item>
+
         <Menu.Menu position="right">
           {isLoggedIn ?
             <Menu.Item as={Link} to="account" activeClassName="active">

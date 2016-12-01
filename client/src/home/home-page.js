@@ -1,6 +1,9 @@
 import React, {
 } from 'react';
+import _ from 'lodash';
 import Helmet from 'react-helmet';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import {
   Divider,
   Container,
@@ -9,13 +12,13 @@ import {
 import CreateShow from '../show/create-show';
 import ShowsList from '../show/shows-list';
 
-export default function HomePage() {
+function HomePage(props) {
   return (
     <Container>
       <Helmet title="Harry TV" />
       <Divider hidden />
       <Segment>
-        <ShowsList />
+        <ShowsList shows={_.get(props, 'data.homepage', [])} />
       </Segment>
       <Segment>
         <CreateShow />
@@ -23,3 +26,17 @@ export default function HomePage() {
     </Container>
   );
 }
+
+export default graphql(gql`
+  query Homepage {
+    homepage {
+      id
+      title
+      slug
+      images {
+        poster
+      }
+      dateCreated
+    }
+  }
+`)(HomePage);

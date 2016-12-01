@@ -9,6 +9,7 @@ import App from './app/app';
 import HomePage from './home/home-page';
 import AboutPage from './about/about-page';
 import AccountPage from './account/account-page';
+import ShowsListPage from './show/shows-list-page';
 import ShowChatPage from './show/show-chat-page';
 import NotFoundPage from './error/error-404';
 
@@ -21,6 +22,7 @@ export default function getRoutes() {
       {/* Routes */}
       <Route name="about" path="about" component={AboutPage} />
       <Route name="account" path="account" component={AccountPage} />
+      <Route name="showsList" path="shows" component={ShowsListPage} />
       <Route name="showIndex" path=":showSlug" component={ShowChatPage} />
 
       {/* Catch all route */}
