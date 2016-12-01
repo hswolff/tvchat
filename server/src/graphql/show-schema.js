@@ -39,7 +39,7 @@ export const showResolver = {
       }
 
       try {
-        const shows = await Models.Show.find();
+        const shows = await Models.Show.find().sort({ title: 1 });
         return shows;
       } catch (e) {
         throw e;
