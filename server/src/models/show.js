@@ -67,5 +67,12 @@ ShowSchema.methods.setFanart = function(data) {
   };
 };
 
+ShowSchema.methods.hasImages = function() {
+  return this.images.background != null && this.images.poster != null;
+};
+
+ShowSchema.methods.getIdsForFanart = function() {
+  return this.dataProvider.trakttv.data.ids;
+};
 
 export default ShowSchema;
