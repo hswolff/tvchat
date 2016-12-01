@@ -4,15 +4,12 @@ import { isTokenValid } from './auth';
 import createDbConnection from './db';
 import graphql from './graphql';
 
-const PORT = (+process.env.PORT) || 4000;
-process.env.JWT_SECRET = process.env.JWT_SECRET || 'NotVerySecret';
-
 export default async function createServer() {
   await createDbConnection();
 
   // Create hapi server.
   const server = new hapi.Server();
-  server.connection({ port: PORT });
+  server.connection({ port: process.env.PORT });
 
   await server.register([
     authJwt2,
