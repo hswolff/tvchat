@@ -9,7 +9,6 @@ import {
   Container,
   Segment,
 } from 'semantic-ui-react';
-import CreateShow from '../show/create-show';
 import ShowsList from '../show/shows-list';
 
 function HomePage(props) {
@@ -19,9 +18,6 @@ function HomePage(props) {
       <Divider hidden />
       <Segment>
         <ShowsList shows={_.get(props, 'data.homepage', [])} />
-      </Segment>
-      <Segment>
-        <CreateShow />
       </Segment>
     </Container>
   );
