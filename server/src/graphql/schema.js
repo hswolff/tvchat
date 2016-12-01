@@ -14,7 +14,7 @@ schema {
 
 type Query {
   chatMessages(showId: String!): [ChatMessage]!
-  chatUsers(showId: String!): [ChatUser]!
+  chatUsers(showId: String!): [ChatUser]
   ${showQuery}
   ${authQuery}
   ${feedQuery}
