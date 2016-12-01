@@ -57,12 +57,10 @@ type UpdatedChatUser {
 export const rootResolver = {
   Query: {
     async chatMessages(root, { showId }, { Models }) {
-      const {
-        ChatMessage,
-      } = Models;
+      const ChatMessage = Models.ChatMessageRoot.createNamespacedModel(showId);
 
       return await ChatMessage
-        .find({ showId })
+        .find()
         .limit(1000)
         .sort({ timestamp: 1 });
     },
@@ -72,7 +70,7 @@ export const rootResolver = {
       } = Models;
 
       return await ChatUser
-        .find({ showId })
+        .find()
         .limit(1000)
         .sort({ timestamp: 1 });
     },
@@ -84,9 +82,7 @@ export const rootResolver = {
         throw new Error('Not logged in.');
       }
 
-      const {
-        ChatMessage,
-      } = Models;
+      const ChatMessage = Models.ChatMessageRoot.createNamespacedModel(args.showId);
 
       const chatMessage = await ChatMessage.create(_.extend({}, args, {
         userId: credentials.id,

@@ -7,7 +7,7 @@ import ShowSchema from './show';
 import UserSchema from './user';
 
 export default {
-  ChatMessage: mongoose.model('ChatMessage', ChatMessageSchema),
+  ChatMessageRoot: mongoose.model('ChatMessageRoot', ChatMessageSchema),
   ChatUser: mongoose.model('ChatUser', ChatUsersSchema),
   Feed: mongoose.model('Feed', FeedSchema),
   RefreshToken: mongoose.model('RefreshToken', RefreshTokenSchema),
