@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
 import { authQuery, authMutation, authSchema, authResolver } from './auth-schema';
+import { feedQuery, feedMutation, feedSchema, feedResolver } from './feed-schema';
 import { showQuery, showMutation, showSchema, showResolver } from './show-schema';
 import { subscriptionSchema, subscriptionResolver } from './subscriptions';
 
@@ -16,6 +17,7 @@ type Query {
   chatUsers(showId: String!): [ChatUser]!
   ${showQuery}
   ${authQuery}
+  ${feedQuery}
 }
 
 type Mutation {
@@ -25,6 +27,7 @@ type Mutation {
   ): ChatMessage!
 
   ${authMutation}
+  ${feedMutation}
   ${showMutation}
 }
 
@@ -119,12 +122,14 @@ export default makeExecutableSchema({
     rootSchema,
     subscriptionSchema,
     authSchema,
+    feedSchema,
     showSchema,
   ],
   resolvers: _.merge(
     rootResolver,
     subscriptionResolver,
     authResolver,
+    feedResolver,
     showResolver
   ),
 });

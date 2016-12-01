@@ -5,7 +5,7 @@ shows(slug: String): [Show]!
 
 export const showMutation = `
 createShow(
-  name: String!
+  title: String!
   slug: String!
 ): Show
 `;
@@ -13,9 +13,15 @@ createShow(
 export const showSchema = `
 type Show {
   id: ID!
-  name: String!
+  title: String!
   slug: String!
+  images: ShowImages
   dateCreated: Float!
+}
+
+type ShowImages {
+  background: String
+  poster: String
 }
 `;
 

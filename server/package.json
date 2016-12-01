@@ -19,6 +19,8 @@
     "lodash": "^4.17.2",
     "mongoose": "^4.7.0",
     "reify": "^0.3.8",
-    "subscriptions-transport-ws": "^0.3.1"
+    "subscriptions-transport-ws": "^0.3.1",
+    "trakt.tv": "^2.2.0",
+    "trakt.tv-images": "^1.0.0"
   }
 }
