@@ -7,8 +7,6 @@ import Models from '../models';
 import { verifyToken } from '../auth';
 import schema from './schema';
 
-const WS_PORT = process.env.WS_PORT || 8080;
-
 export default async function graphql(server) {
   const { subscriptionManager, pubsub } = createSubscriptionManager({ schema });
 
@@ -58,8 +56,8 @@ export default async function graphql(server) {
     response.end();
   });
 
-  websocketServer.listen(WS_PORT, () => console.log( // eslint-disable-line no-console
-    `Websocket Server is now running on http://localhost:${WS_PORT}`
+  websocketServer.listen(process.env.WS_PORT, () => console.log( // eslint-disable-line no-console
+    `Websocket Server is now running on http://localhost:${process.env.WS_PORT}`
   ));
 
   const unsubIdToUserId = {};

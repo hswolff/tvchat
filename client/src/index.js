@@ -25,7 +25,7 @@ import useNamedRoutes from 'use-named-routes';
 
 function createApolloClient() {
   const networkInterface = createNetworkInterface({
-    uri: 'http://localhost:4000/graphql',
+    uri: window.CONFIG.GRAPHQL_URI,
     // transportBatching: true,
   });
 
@@ -52,7 +52,7 @@ function createApolloClient() {
     },
   }]);
 
-  const wsClient = new Client('ws://localhost:8080');
+  const wsClient = new Client(window.CONFIG.WS_URI);
 
   // Source: https://github.com/apollostack/GitHunt-React/blob/master/ui/helpers/subscriptions.js
   function addGraphQLSubscriptions(networkInterface, wsClient) {
