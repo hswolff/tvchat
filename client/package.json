@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "aphrodite": "^1.1.0",
-    "apollo-client": "^0.5.6",
-    "graphql-tag": "^1.0.0",
+    "apollo-client": "^0.5.9",
+    "graphql-tag": "^1.1.2",
     "lodash": "^4.17.2",
     "react": "^15.4.1",
     "react-apollo": "^0.6.0",
@@ -21,7 +21,7 @@
     "redux-persist": "^4.0.0-beta1",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.1.0",
-    "semantic-ui-react": "^0.61.4",
+    "semantic-ui-react": "^0.61.10",
     "subscriptions-transport-ws": "^0.3.1",
     "use-named-routes": "^0.3.2"
   },
