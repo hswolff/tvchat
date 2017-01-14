@@ -59,18 +59,8 @@ export function createToken(user) {
 }
 
 export function hashPassword(password) {
-  return new Promise((resolve, reject) => {
-    // Generate a salt at level 10 strength
-    bcrypt.genSalt(10, (__, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(hash);
-        }
-      });
-    });
-  });
+  // Generate a salt at level 10 strength
+  return bcrypt.hash(password, 10);
 }
 
 export function validatePassword(hashedPassword, password) {

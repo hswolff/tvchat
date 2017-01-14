@@ -26,7 +26,7 @@ class LogIn extends Component {
     const {
       username,
       password,
-    } = serializedForm;
+    } = serializedForm.formData;
     if (!username || !password) {
       return;
     }

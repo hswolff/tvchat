@@ -64,7 +64,6 @@ export default async function graphql(server) {
 
   const origSubscribe = subscriptionManager.subscribe;
   subscriptionManager.subscribe = async function (options) {
-    // console.log('hello', options);
     if (options.operationName !== 'newChatUser') {
       return origSubscribe.apply(this, arguments);
     }
@@ -102,7 +101,11 @@ export default async function graphql(server) {
 
   const origUnsubscribe = subscriptionManager.unsubscribe;
   subscriptionManager.unsubscribe = async function (subId) {
-    const { userId, showId } = unsubIdToUserId[subId];
+    const subObject = unsubIdToUserId[subId];
+    if (!subObject) {
+      return;
+    }
+    const { userId, showId } = subObject;
     const ChatUser = Models.ChatUserRoot.createNamespacedModel(showId);
     if (userId != null) {
       const chatUser = await ChatUser.findOne({ userId });
