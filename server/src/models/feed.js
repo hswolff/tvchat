@@ -93,6 +93,7 @@ FeedSchema.statics.updateHomepage = async function updateHomepage({ force = fals
       $set: {
         name: 'homepage',
         shows: persistedShows,
+        lastUpdated: Date.now(),
       }
     },
     {
