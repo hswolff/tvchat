@@ -33,8 +33,8 @@ class LogIn extends Component {
 
     const values = {
       password,
-      username: null,
-      email: null,
+      username: undefined,
+      email: undefined,
     };
 
     if (EMAIL_REGEX.test(username)) {
