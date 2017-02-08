@@ -8,34 +8,26 @@ import promiseMiddleware from 'redux-promise';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import createRootRecuer from './modules';
 
-export default function createStore({
-  initialState = {},
-  reducers = {},
-  middleware = [],
-}) {
+export default function createStore(
+  { initialState = {}, reducers = {}, middleware = [] },
+) {
   let enhancer = compose(
     applyMiddleware(thunkMiddleware, promiseMiddleware, ...middleware),
-    autoRehydrate()
+    autoRehydrate(),
   );
 
   if (window.devToolsExtension) {
-    enhancer = compose(
-      enhancer,
-      window.devToolsExtension()
-    );
+    enhancer = compose(enhancer, window.devToolsExtension());
   }
 
   const store = reduxCreateStore(
     createRootRecuer(reducers),
     initialState,
-    enhancer
+    enhancer,
   );
 
   // Persist store in browser w/ redux-persist.
-  persistStore(store, {
-    debounce: 500,
-    whitelist: ['viewer'],
-  });
+  persistStore(store, { debounce: 500, whitelist: ['app', 'viewer'] });
 
   return store;
 }

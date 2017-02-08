@@ -7,6 +7,7 @@ import {
   Grid,
   Header,
   Image,
+  Segment
 } from 'semantic-ui-react'
 
 export default class ShowsList extends Component {
@@ -16,7 +17,9 @@ export default class ShowsList extends Component {
         {this.props.shows.map(show => (
           <Grid.Column key={show.slug} as={Link} to={`/${show.slug}`} width={4}>
             <Image src={show.images.poster} size="medium" />
-            <Header attached="bottom">{show.title}</Header>
+            <Segment attached="bottom">
+              <Header>{show.title}</Header>
+            </Segment>
           </Grid.Column>
         ))}
       </Grid>
