@@ -129,5 +129,7 @@ export default async function graphql(server) {
         },
       });
     }
-  }, websocketServer);
+  }, {
+    server: websocketServer,
+  });
 }

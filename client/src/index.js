@@ -12,7 +12,7 @@ import ApolloClient, {
   addTypename,
 } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
-import { Client } from 'subscriptions-transport-ws';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 // Router
 import createHistory from 'history/lib/createBrowserHistory';
 import {
@@ -52,7 +52,7 @@ function createApolloClient() {
     },
   }]);
 
-  const wsClient = new Client(window.CONFIG.WS_URI);
+  const wsClient = new SubscriptionClient(window.CONFIG.WS_URI);
 
   // Source: https://github.com/apollostack/GitHunt-React/blob/master/ui/helpers/subscriptions.js
   function addGraphQLSubscriptions(networkInterface, wsClient) {
