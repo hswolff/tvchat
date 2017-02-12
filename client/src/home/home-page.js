@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import fp from 'lodash/fp';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
@@ -19,7 +20,12 @@ const DismissMessageConnected = connect(null, { onClick: dismissHomepageInfo })(
 );
 
 function HomePage(props) {
-  const { showMessage } = props;
+  const { showMessage, data } = props;
+  const showsData = _.flow(
+    fp.getOr([], 'homepage'),
+    fp.orderBy(fp.getOr(false, 'usersOnline.length'), 'desc')
+  )(data);
+
   return (
     <Container>
       <Helmet title="Harry TV" />
@@ -38,7 +44,7 @@ function HomePage(props) {
         </p>
       </Message>
       <Segment>
-        <ShowsList shows={_.get(props, 'data.homepage', [])} />
+        <ShowsList shows={showsData} />
       </Segment>
     </Container>
   );
@@ -54,6 +60,11 @@ const query = gql`
         poster
       }
       dateCreated
+      usersOnline {
+        user {
+          username
+        }
+      }
     }
   }
 `;

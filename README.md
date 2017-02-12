@@ -11,7 +11,7 @@ Homepage:
 
   DONE: Show count of how many people are in each chatroom on the home page so you know where conversations are
 
-  Additionally group shows that have people chatting at top and rest at the bottom.
+  DONE: Additionally Group shows that have people chatting at top and rest at the bottom.
 
 
 Infra:
