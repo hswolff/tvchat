@@ -26,7 +26,7 @@ import useNamedRoutes from 'use-named-routes';
 function createApolloClient() {
   const networkInterface = createNetworkInterface({
     uri: window.CONFIG.GRAPHQL_URI,
-    // transportBatching: true,
+    transportBatching: true,
   });
 
   const client = new ApolloClient({
