@@ -80,7 +80,7 @@ export default async function graphql(server) {
       return origValue;
     }
 
-    const ChatUser = Models.ChatUserRoot.createNamespacedModel(showId);
+    const { ChatUser } = Models;
 
     const chatUser = new ChatUser({ userId, showId });
     chatUser._id = undefined;
@@ -106,9 +106,9 @@ export default async function graphql(server) {
       return;
     }
     const { userId, showId } = subObject;
-    const ChatUser = Models.ChatUserRoot.createNamespacedModel(showId);
+    const { ChatUser } = Models;
     if (userId != null) {
-      const chatUser = await ChatUser.findOne({ userId });
+      const chatUser = await ChatUser.findOne({ userId, showId });
       pubsub.publish('updatedChatUser', {
         added: false,
         chatUser,

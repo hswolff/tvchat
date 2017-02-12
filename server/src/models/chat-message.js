@@ -1,8 +1,8 @@
-import mongoose, {
+import {
   Schema,
 } from 'mongoose';
 
-const ChatMessage = new Schema({
+export default new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -10,6 +10,7 @@ const ChatMessage = new Schema({
   showId: {
     type: Schema.Types.ObjectId,
     required: true,
+    index: true,
   },
   message: {
     type: String,
@@ -19,13 +20,3 @@ const ChatMessage = new Schema({
     default: Date.now,
   },
 });
-
-ChatMessage.statics.createNamespacedModel = function(id) {
-  try {
-    return mongoose.model(`ChatMessage${id}`);
-  } catch (e) { }
-
-  return mongoose.model(`ChatMessage${id}`, ChatMessage, `chat.messages.${id}`);
-};
-
-export default ChatMessage;

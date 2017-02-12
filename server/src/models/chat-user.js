@@ -1,8 +1,8 @@
-import mongoose, {
+import {
   Schema,
 } from 'mongoose';
 
-const ChatUser = new Schema({
+export default new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -11,6 +11,7 @@ const ChatUser = new Schema({
   },
   showId: {
     type: Schema.Types.ObjectId,
+    index: true,
     required: true,
   },
   timestamp: {
@@ -18,13 +19,3 @@ const ChatUser = new Schema({
     default: Date.now,
   },
 });
-
-ChatUser.statics.createNamespacedModel = function(id) {
-  try {
-    return mongoose.model(`ChatUser{id}`);
-  } catch (e) { }
-
-  return mongoose.model(`ChatUser{id}`, ChatUser, `chat.users.${id}`);
-};
-
-export default ChatUser;
