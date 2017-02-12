@@ -3,18 +3,7 @@ import {
 } from 'mongoose';
 import moment from 'moment';
 import _ from 'lodash';
-import Trakt from 'trakt.tv';
-
-const trakt = new Trakt({
-  client_id: process.env.TRAKT_API_KEY,
-  plugins: ['images'],
-  options: {
-    images: {
-      smallerImages: true,
-      fanartApiKey: process.env.FANART_API_KEY,
-    },
-  },
-}, true);
+import trakt from '../services/trakt';
 
 const FeedSchema = new Schema({
   name: {
