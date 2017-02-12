@@ -4,7 +4,7 @@ import {
 import _ from 'lodash';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
-import gql from 'graphql-tag';
+import { mutations } from '../graphql';
 import {
   isLoggedIn,
   isAccessTokenExpired as isAccessTokenExpiredSelector,
@@ -65,21 +65,7 @@ class AppSideEffects extends Component {
 }
 
 export default [
-  graphql(gql`
-    mutation (
-      $grantType: GrantType!,
-      $refreshToken: String,
-    ) {
-      createToken(
-        grantType: $grantType
-        refreshToken: $refreshToken
-      ) {
-        accessToken
-        accessTokenExpiration
-        refreshToken
-      }
-    }
-  `, {
+  graphql(mutations.createToken, {
     props: ({ ownProps, mutate }) => ({
       refreshToken(props = {}) {
         return mutate({

@@ -15,7 +15,7 @@ Homepage:
 
 
 Infra:
-  If a user can not log in then just log them out and clear localStorage.
+  DONE: If a user can not log in then just log them out and clear localStorage.
     if the refresh token goes bad or the localStorage gets corrupted.
 
   Self host images
@@ -26,6 +26,8 @@ Infra:
   Make updating homepage done in a worker thread, once every hour, as right now it takes 1 minute to load all images.
     models/feed fetch show images +0ms
     models/feed fetch show images +59s
+
+  Use DataLoader? https://github.com/facebook/dataloader
 
 Add About Page
   Include introduction paragraph there.

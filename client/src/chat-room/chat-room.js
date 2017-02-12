@@ -21,6 +21,7 @@ import {
 import {
   isLoggedIn as isLoggedInSelector,
   getAccessToken,
+  logOut,
 } from '../data/modules/viewer';
 import Fragments from '../fragments';
 import ChatMessage from './chat-message';
@@ -168,6 +169,7 @@ class ChatRoom extends Component {
       operationName: 'newChatUser',
     }, (err, result) => {
       if (err) {
+        this.props.logOut();
         console.error(_.get(err, '[0].message'));
       }
     });
@@ -230,6 +232,7 @@ export default compose(
     }),
     {
       upsertUser,
+      logOut,
     }
   ),
   graphql(gql`
