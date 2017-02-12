@@ -46,6 +46,6 @@ Show Page:
     Show a prompt in the ChatInput field to enter a username to start logging in.
     Explain that this creates an account and to be able to access it later you need to add a password.
 
-  Disable autocomplete on ChatInput input field
+  DONE: Disable autocomplete on ChatInput input field
 
   Support counting anonymous users in a show page

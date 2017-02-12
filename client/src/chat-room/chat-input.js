@@ -41,6 +41,7 @@ class ChatInput extends Component {
             placeholder="Your Message"
             value={this.state.value}
             onChange={e => this.setState({ value: e.target.value })}
+            autoComplete="off"
           />
           <Form.Button
             floated="right"
