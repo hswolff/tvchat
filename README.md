@@ -9,7 +9,7 @@ Homepage:
 
   DONE: Tune the update algorithm, should update once every hour, on the hour.
 
-  Show count of how many people are in each chatroom on the home page so you know where conversations are
+  DONE: Show count of how many people are in each chatroom on the home page so you know where conversations are
 
   Additionally group shows that have people chatting at top and rest at the bottom.
 

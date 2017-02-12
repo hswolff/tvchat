@@ -36,6 +36,11 @@ export default graphql(gql`
         poster
       }
       dateCreated
+      usersOnline {
+        user {
+          username
+        }
+      }
     }
   }
 `)(ShowsListPage);

@@ -7,7 +7,8 @@ import {
   Grid,
   Header,
   Image,
-  Segment
+  Segment,
+  Label,
 } from 'semantic-ui-react'
 
 export default class ShowsList extends Component {
@@ -19,6 +20,9 @@ export default class ShowsList extends Component {
             <Image src={show.images.poster} size="medium" />
             <Segment attached="bottom">
               <Header>{show.title}</Header>
+              <Label>
+                Users Online: {_.get(show, 'usersOnline.length', 0)}
+              </Label>
             </Segment>
           </Grid.Column>
         ))}

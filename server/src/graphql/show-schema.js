@@ -17,6 +17,7 @@ type Show {
   slug: String!
   images: ShowImages
   dateCreated: Float!
+  usersOnline: [ChatUser]!
 }
 
 type ShowImages {
@@ -52,4 +53,10 @@ export const showResolver = {
       return show;
     },
   },
+  Show: {
+    usersOnline(data, args, { Models }, info) {
+      // TODO: Use DataLoader to reduce populate call.
+      return Models.ChatUser.find({ show: data.id }).populate('user');
+    }
+  }
 };
