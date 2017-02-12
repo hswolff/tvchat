@@ -83,7 +83,9 @@ FeedSchema.statics.updateHomepage = async function updateHomepage({ force = fals
   }));
 
   debug('fetch show images');
-  await Promise.all(persistedShows.map(async showInstance => {
+
+  // Don't block thread, let this be done passively.
+  Promise.all(persistedShows.map(async showInstance => {
     if (showInstance.hasImages()) {
       return;
     }
@@ -95,25 +97,28 @@ FeedSchema.statics.updateHomepage = async function updateHomepage({ force = fals
     showInstance.setFanart(images);
 
     return showInstance.save();
-  }));
-  debug('done fetching show images');
+  })).then(() => {
+    debug('done fetching show images');
 
-  isUpdatingHomepage = false;
+    isUpdatingHomepage = false;
 
-  return Feed.findOneAndUpdate(
-    { name: 'homepage' },
-    {
-      $set: {
-        name: 'homepage',
-        shows: persistedShows,
-        lastUpdated: Date.now(),
+    Feed.findOneAndUpdate(
+      { name: 'homepage' },
+      {
+        $set: {
+          name: 'homepage',
+          shows: persistedShows,
+          lastUpdated: Date.now(),
+        }
+      },
+      {
+        upsert: true,
+        setDefaultsOnInsert: true,
       }
-    },
-    {
-      upsert: true,
-      setDefaultsOnInsert: true,
-    }
-  );
+    );
+  }).catch(() => {
+    isUpdatingHomepage = false;
+  });
 };
 
 export default FeedSchema;
