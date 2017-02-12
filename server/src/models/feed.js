@@ -35,7 +35,11 @@ FeedSchema.methods.canUpdate = function() {
   return canUpdate;
 }
 
+let isUpdatingHomepage = false;
+
 FeedSchema.statics.updateHomepage = async function updateHomepage({ force = false } = {}) {
+  debug('updateHomepage');
+
   const Show = this.model('Show');
   const Feed = this.model('Feed');
 
@@ -45,7 +49,13 @@ FeedSchema.statics.updateHomepage = async function updateHomepage({ force = fals
     return;
   }
 
+  if (isUpdatingHomepage) {
+    debug('already updating homepage');
+    return;
+  }
+
   debug('updating homepage');
+  isUpdatingHomepage = true;
 
   debug('fetch shows trending');
   const response = await trakt.shows.trending({
@@ -87,6 +97,8 @@ FeedSchema.statics.updateHomepage = async function updateHomepage({ force = fals
     return showInstance.save();
   }));
   debug('done fetching show images');
+
+  isUpdatingHomepage = false;
 
   return Feed.findOneAndUpdate(
     { name: 'homepage' },

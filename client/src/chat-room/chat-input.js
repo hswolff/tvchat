@@ -65,8 +65,6 @@ export default graphql(gql`
       message: $message
     ) {
       id
-      userId
-      showId
       message
       timestamp
     }

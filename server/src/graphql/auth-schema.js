@@ -1,10 +1,13 @@
 import _ from 'lodash';
+import debugCreator from 'debug';
 import {
   verifyAndValidateToken,
   createRefreshToken,
   createToken,
   validatePassword,
 } from '../auth';
+
+const debug = debugCreator('graphql/auth-schema');
 
 export const authQuery = `
 viewer(accessToken: String): Viewer
@@ -53,24 +56,24 @@ type JWT {
 }
 
 interface Identity {
-  id: String
+  id: String!
   email: String
-  username: String
-  dateCreated: Float
+  username: String!
+  dateCreated: Float!
 }
 
 type User implements Identity {
-  id: String
+  id: String!
   email: String
-  username: String
-  dateCreated: Float
+  username: String!
+  dateCreated: Float!
 }
 
 type Viewer implements Identity {
-  id: String
+  id: String!
   email: String
-  username: String
-  dateCreated: Float
+  username: String!
+  dateCreated: Float!
 }
 `;
 
@@ -170,6 +173,8 @@ export const authResolver = {
       } = args;
 
       if (grantType === 'refreshToken') {
+        debug('createToken refreshToken')
+
         const refreshTokenFromDb = await RefreshToken.findOne({
           _id: refreshToken,
         });
@@ -196,6 +201,8 @@ export const authResolver = {
       }
 
       if (grantType === 'password') {
+        debug('createToken password')
+
         const user = await User.findOne(_.pick(args, 'username', 'email'));
 
         if (!user) {
@@ -214,6 +221,8 @@ export const authResolver = {
             userId: user.id,
           });
         } catch (e) {
+          debug('createToken refreshToken already exists')
+
           if (e.message === 'RefreshToken already exists.') {
             await RefreshToken.remove({
               userId: user.id,

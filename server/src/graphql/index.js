@@ -2,10 +2,13 @@ import _ from 'lodash';
 import { graphqlHapi, graphiqlHapi } from 'graphql-server-hapi';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { createServer } from 'http';
+import debugCreator from 'debug';
 import { createSubscriptionManager } from './subscriptions';
 import Models from '../models';
 import { verifyToken } from '../auth';
 import schema from './schema';
+
+const debug = debugCreator('graphql/index');
 
 export default async function graphql(server) {
   const { subscriptionManager, pubsub } = createSubscriptionManager({ schema });
@@ -82,10 +85,16 @@ export default async function graphql(server) {
 
     const { ChatUser } = Models;
 
-    const chatUser = new ChatUser({ userId, showId });
+    const chatUser = new ChatUser({ user: userId, show: showId });
     chatUser._id = undefined;
-    const newChatUser =  await ChatUser
-      .findOneAndUpdate({ userId }, chatUser, { upsert: true, new: true })
+
+    let newChatUser = await ChatUser
+      .findOneAndUpdate({ user: userId }, chatUser, { upsert: true, new: true })
+
+    newChatUser = await newChatUser.populate('user show').execPopulate();
+
+    debug('subscriptionManager subscribe');
+
     pubsub.publish('updatedChatUser', {
       added: true,
       chatUser: newChatUser
@@ -108,13 +117,17 @@ export default async function graphql(server) {
     const { userId, showId } = subObject;
     const { ChatUser } = Models;
     if (userId != null) {
-      const chatUser = await ChatUser.findOne({ userId, showId });
+      let chatUser = await ChatUser.findOne({ user: userId, show: showId });
+      chatUser = await chatUser.populate('user show').execPopulate();
+
+      debug('subscriptionManager unSubscribe');
+
       pubsub.publish('updatedChatUser', {
         added: false,
         chatUser,
       });
       delete unsubIdToUserId[subId];
-      await ChatUser.remove({ userId });
+      await ChatUser.remove({ user: userId });
     }
 
     return origUnsubscribe.apply(this, arguments);

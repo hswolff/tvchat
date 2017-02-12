@@ -1,4 +1,7 @@
+import debugCreator from 'debug';
 import { PubSub, SubscriptionManager } from 'graphql-subscriptions';
+
+const debug = debugCreator('graphql/subscriptions');
 
 export function createSubscriptionManager({ schema }) {
   const pubsub = new PubSub();
@@ -8,15 +11,21 @@ export function createSubscriptionManager({ schema }) {
     setupFunctions: {
       newChatMessage: (options, args) => ({
         newChatMessage: {
-          // Only send if we're in the same showId.
-          filter: chatMessage => chatMessage.showId.toString() === args.showId,
+          // Only send if we're in the same show.
+          filter: chatMessage => {
+            debug('graphql/subscriptions newChatMessage filter');
+            return chatMessage.show.id === args.showId;
+          }
         }
       }),
 
       updatedChatUser: (options, args) => ({
         updatedChatUser: {
-          // Only send if we're in the same showId.
-          filter: data => data.chatUser.showId.toString() === args.showId,
+          // Only send if we're in the same show.
+          filter: data => {
+            debug('graphql/subscriptions updatedChatUser filter');
+            return data.chatUser.show.id === args.showId;
+          }
         }
       }),
     },

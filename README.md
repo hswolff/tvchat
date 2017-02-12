@@ -23,6 +23,10 @@ Infra:
 
   Favicon.
 
+  Make updating homepage done in a worker thread, once every hour, as right now it takes 1 minute to load all images.
+    models/feed fetch show images +0ms
+    models/feed fetch show images +59s
+
 Add About Page
   Include introduction paragraph there.
 

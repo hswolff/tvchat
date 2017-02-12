@@ -3,12 +3,14 @@ import {
 } from 'mongoose';
 
 export default new Schema({
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
-  showId: {
+  show: {
     type: Schema.Types.ObjectId,
+    ref: 'Show',
     required: true,
     index: true,
   },

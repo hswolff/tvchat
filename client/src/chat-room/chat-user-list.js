@@ -39,9 +39,10 @@ class ChatUserList extends Component {
             added
             chatUser {
               id
-              userId
-              showId
               timestamp
+              show {
+                id
+              }
               user {
                 ${Fragments.User}
               }
@@ -101,7 +102,7 @@ class ChatUserList extends Component {
     return (
       <div>
         {_.map(this.state.chatUsers, chatUser => {
-          const user = this.props.users[chatUser.userId] || chatUser.user;
+          const user = this.props.users[chatUser.user.id] || chatUser.user;
           return <ChatUserCell key={user.id} {...chatUser} {...user} />;
         })}
       </div>
@@ -122,8 +123,9 @@ export default compose(
     query chatUsers($showId: String!) {
       chatUsers(showId: $showId) {
         id
-        userId
-        showId
+        show {
+          id
+        }
         user {
           ${Fragments.User}
         }

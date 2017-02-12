@@ -45,6 +45,6 @@ function ChatMessage({ id, message, timestamp, username }) {
 }
 export default connect(
   (state, ownProps) => ({
-    username: _.get(getUserById(state, { id: ownProps.userId }), 'username'),
+    username: _.get(getUserById(state, { id: ownProps.user.id }), 'username'),
   })
 )(ChatMessage);

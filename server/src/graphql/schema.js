@@ -1,9 +1,12 @@
 import _ from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
+import debugCreator from 'debug';
 import { authQuery, authMutation, authSchema, authResolver } from './auth-schema';
 import { feedQuery, feedMutation, feedSchema, feedResolver } from './feed-schema';
 import { showQuery, showMutation, showSchema, showResolver } from './show-schema';
 import { subscriptionSchema, subscriptionResolver } from './subscriptions';
+
+const debug = debugCreator('graphql/schema');
 
 export const rootSchema = `
 schema {
@@ -33,18 +36,16 @@ type Mutation {
 
 type ChatMessage {
   id: ID!
-  userId: String!
   user: User
-  showId: String!
+  show: Show
   message: String!
   timestamp: Float!
 }
 
 type ChatUser {
   id: String!
-  userId: String!
   user: User
-  showId: String!
+  show: Show
   timestamp: Float!
 }
 
@@ -56,21 +57,27 @@ type UpdatedChatUser {
 
 export const rootResolver = {
   Query: {
-    async chatMessages(root, { showId }, { Models }) {
+    chatMessages(root, { showId }, { Models }) {
       const { ChatMessage } = Models;
 
-      return await ChatMessage
-        .find()
+      debug('query chatMessages');
+
+      return ChatMessage
+        .find({ show: showId })
+        .populate('user show')
         .limit(1000)
         .sort({ timestamp: 1 });
     },
-    async chatUsers(root, { showId }, { Models }) {
+    chatUsers(root, { showId }, { Models }) {
       const {
         ChatUser,
       } = Models;
 
-      return await ChatUser
-        .find()
+      debug('query chatUsers');
+
+      return ChatUser
+        .find({ show: showId })
+        .populate('user show')
         .limit(1000)
         .sort({ timestamp: 1 });
     },
@@ -84,31 +91,17 @@ export const rootResolver = {
 
       const { ChatMessage } = Models;
 
-      const chatMessage = await ChatMessage.create(_.extend({}, args, {
-        userId: credentials.id,
+      debug('createChatMessage')
+      let chatMessage = await ChatMessage.create(_.extend({}, args, {
+        user: credentials.id,
+        show: args.showId,
       }));
 
+      debug('createChatMessage publish');
+      chatMessage = await chatMessage.populate('user show').execPopulate();
       pubsub.publish('newChatMessage', chatMessage);
 
       return chatMessage;
-    },
-  },
-  ChatMessage: {
-    async user(data, args, { Models }) {
-      const {
-        User,
-      } = Models;
-
-      return User.findOne({ _id: data.userId });
-    },
-  },
-  ChatUser: {
-    async user(data, args, { Models }) {
-      const {
-        User,
-      } = Models;
-
-      return User.findOne({ _id: data.userId });
     },
   },
 };

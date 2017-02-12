@@ -56,10 +56,11 @@ class ChatRoom extends Component {
         subscription newChatMessage($showId: String!) {
           newChatMessage(showId: $showId) {
             id
-            userId
-            showId
             message
             timestamp
+            show {
+              id
+            }
             user {
               ${Fragments.User}
             }
@@ -167,7 +168,7 @@ class ChatRoom extends Component {
       operationName: 'newChatUser',
     }, (err, result) => {
       if (err) {
-        console.error(err);
+        console.error(_.get(err, '[0].message'));
       }
     });
   }
@@ -235,10 +236,11 @@ export default compose(
     query chatMessages($showId: String!) {
       chatMessages(showId: $showId) {
         id
-        userId
-        showId
         message
         timestamp
+        show {
+          id
+        }
         user {
           ${Fragments.User}
         }
