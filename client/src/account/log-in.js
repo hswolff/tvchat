@@ -2,7 +2,7 @@ import React, {
   Component,
 } from 'react';
 import _ from 'lodash';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import gql from 'graphql-tag';
 import {
@@ -84,78 +84,72 @@ class LogIn extends Component {
   }
 }
 
-const LogInConnected = connect(
-  (state) => ({
-    isLoggedIn: isLoggedIn(state),
-  }),
-  {
-    persistViewer,
-    logOut,
-  },
-)(LogIn);
-
-const Query = graphql(gql`
-  query viewer {
-    viewer {
-      id
-      email
-      username
-      dateCreated
-    }
-  }
-`, { name: 'viewer' });
-
-const LogInMutation = graphql(gql`
-  mutation (
-    $grantType: GrantType!,
-    $username: String,
-    $email: String,
-    $password: String,
-  ) {
-    createToken(
-      grantType: $grantType
-      username: $username
-      email: $email
-      password: $password
-    ) {
-      accessToken
-      accessTokenExpiration
-      refreshToken
-    }
-  }
-`, {
-  props: ({ mutate }) => ({
-    logIn(props) {
-      return mutate({
-        variables: {
-          grantType: 'password',
-          ...props,
-        },
-      });
+export default compose(
+  connect(
+    (state) => ({
+      isLoggedIn: isLoggedIn(state),
+    }),
+    {
+      persistViewer,
+      logOut,
     },
-  }),
-});
-
-const CreateUser = graphql(gql`
-  mutation (
-    $username: String!,
-    $email: String,
-    $password: String,
-  ) {
-    createUser(
-      username: $username
-      email: $email
-      password: $password
-    ) {
-      accessToken
-      accessTokenExpiration
-      refreshToken
+  ),
+  graphql(gql`
+    query viewer {
+      viewer {
+        id
+        email
+        username
+        dateCreated
+      }
     }
-  }
-`, { name: 'createUser' });
+  `, { name: 'viewer' }),
+  graphql(gql`
+    mutation (
+      $grantType: GrantType!,
+      $username: String,
+      $email: String,
+      $password: String,
+    ) {
+      createToken(
+        grantType: $grantType
+        username: $username
+        email: $email
+        password: $password
+      ) {
+        accessToken
+        accessTokenExpiration
+        refreshToken
+      }
+    }
+  `, {
+    props: ({ mutate }) => ({
+      logIn(props) {
+        return mutate({
+          variables: {
+            grantType: 'password',
+            ...props,
+          },
+        });
+      },
+    }),
+  }),
 
-export default [
-  Query,
-  LogInMutation,
-  CreateUser,
-].reduce((Comp, apollo) => apollo(Comp), LogInConnected);
+  graphql(gql`
+    mutation (
+      $username: String!,
+      $email: String,
+      $password: String,
+    ) {
+      createUser(
+        username: $username
+        email: $email
+        password: $password
+      ) {
+        accessToken
+        accessTokenExpiration
+        refreshToken
+      }
+    }
+  `, { name: 'createUser' })
+)(LogIn);
