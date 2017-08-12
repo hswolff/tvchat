@@ -13,7 +13,6 @@ import {
 // Apollo
 import ApolloClient, {
   createNetworkInterface,
-  addTypename,
 } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
@@ -36,7 +35,7 @@ function createApolloClient() {
 
   const client = new ApolloClient({
     networkInterface,
-    queryTransformer: addTypename,
+    addTypename: true,
     dataIdFromObject: (result) => {
       if (result.id && result.__typename) {
         return result.__typename + result.id;

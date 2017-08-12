@@ -1,7 +1,7 @@
 import React, {
   Component,
-  PropTypes,
 } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
@@ -252,7 +252,7 @@ export default compose(
   `, {
     name: 'chatMessages',
     options: (ownProps) => ({
-      forceFetch: true,
+      // forceFetch: true,
       variables: { showId: ownProps.showId },
     }),
   }),

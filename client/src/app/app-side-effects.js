@@ -1,7 +1,6 @@
 import {
   Component,
 } from 'react';
-import _ from 'lodash';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import { mutations } from '../graphql';

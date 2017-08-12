@@ -134,7 +134,7 @@ export default compose(
   `, {
     name: 'chatUsers',
     options: (ownProps) => ({
-      forceFetch: true,
+      // forceFetch: true,
       variables: { showId: ownProps.showId },
     }),
   }),

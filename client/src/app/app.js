@@ -1,6 +1,5 @@
-import React, {
-  PropTypes,
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import AppSideEffects from './app-side-effects';
 import AppHeader from './app-header';

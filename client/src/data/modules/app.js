@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 const DISMISS_HOMEPAGE_INFO = 'app/DISMISS_HOMEPAGE_INFO';
 const SHOW_HOMEPAGE_INFO = 'app/SHOW_HOMEPAGE_INFO';
 
