@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony-async-await ./src/index",
-    "dev": "nodemon --harmony-async-await --trace-warnings ./src/index"
+    "start": "node ./src/index",
+    "dev": "nodemon --trace-warnings ./src/index"
   },
   "private": true,
   "dependencies": {

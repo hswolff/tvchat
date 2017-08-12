@@ -14,7 +14,7 @@ export default function AboutPage() {
     <div className={css(styles.container)}>
       <Helmet title="About" />
       <h1>About</h1>
-      <p>All about me!</p>
+      <p>All about me</p>
     </div>
   );
 }

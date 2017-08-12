@@ -85,7 +85,7 @@ FeedSchema.statics.updateHomepage = async function updateHomepage({ force = fals
   debug('fetch show images');
 
   // Don't block thread, let this be done passively.
-  Promise.all(persistedShows.map(async showInstance => {
+  await Promise.all(persistedShows.map(async showInstance => {
     if (showInstance.hasImages()) {
       return;
     }
@@ -102,7 +102,7 @@ FeedSchema.statics.updateHomepage = async function updateHomepage({ force = fals
 
     isUpdatingHomepage = false;
 
-    Feed.findOneAndUpdate(
+    return Feed.findOneAndUpdate(
       { name: 'homepage' },
       {
         $set: {
