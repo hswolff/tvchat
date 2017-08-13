@@ -1,6 +1,6 @@
-# harrytv server
+# tvchat server
 
-The server for HarryTV.
+The server for TV Chat.
 
 # Environment variables
 

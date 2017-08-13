@@ -33,14 +33,14 @@ function HomePage(props) {
       <Message info hidden={!showMessage}>
         <DismissMessageConnected />
         <Message.Header>
-          Welcome to HarryTV!
+          Welcome to TV Chat!
         </Message.Header>
         <p>
           The best place to have a real time chat about TV shows that you're watching!
           <br />
-          HarryTV connects you with tv fans from around the world from the comfort of your couch.
+          TV Chat connects you with tv fans from around the world from the comfort of your couch.
           <br />
-          While you enjoy watching your newest episode chat about it with other fans on HarryTV!
+          While you enjoy watching your newest episode chat about it with other fans on TV Chat!
         </p>
       </Message>
       <Segment>

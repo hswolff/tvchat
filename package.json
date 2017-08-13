@@ -1,13 +1,13 @@
 {
-  "name": "harrytv-v2",
-  "version": "1.0.0",
+  "name": "tvchat",
+  "version": "0.8.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Harry Wolff <hello@hswolff.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-eslint": "^7.1.1",
