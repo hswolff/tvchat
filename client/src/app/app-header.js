@@ -18,7 +18,7 @@ function AppHeader({ isLoggedIn }) {
     <Container>
       <Menu>
         <Menu.Item as={Link} to="/" activeClassName="active" onlyActiveOnIndex>
-          Harry TV
+          TV Chat
         </Menu.Item>
 
         <Menu.Item as={Link} to="showsList" activeClassName="active" onlyActiveOnIndex>

@@ -28,7 +28,7 @@ function HomePage(props) {
 
   return (
     <Container>
-      <Helmet title="Harry TV" />
+      <Helmet title="TV Chat" />
       <Divider hidden />
       <Message info hidden={!showMessage}>
         <DismissMessageConnected />
