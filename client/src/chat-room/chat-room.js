@@ -252,7 +252,7 @@ export default compose(
   `, {
     name: 'chatMessages',
     options: (ownProps) => ({
-      // forceFetch: true,
+      fetchPolicy: 'cache-and-network',
       variables: { showId: ownProps.showId },
     }),
   }),
